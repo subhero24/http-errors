@@ -1,26 +1,43 @@
+let getPrototypeOf = Object.getPrototypeOf ? Object.getPrototypeOf.bind(Object) : o => o.__proto__;
+let setPrototypeOf = Object.setPrototypeOf
+	? Object.setPrototypeOf.bind(Object)
+	: (o, p) => {
+			o.__proto__ = p;
+			return o;
+	  };
+
 export default function HttpError(statusCode, message) {
 	if (new.target === HttpError) {
 		let constructor = errorsByStatusCode[statusCode];
 		if (constructor) {
 			return new constructor(message);
 		} else {
-			throw new Error(
-				`Unknown HTTP status code "${statusCode}". Call the HttpError constructor function without the "new" keyword to create custom HTTP errors with non-existing status codes.`,
-			);
+			throw new Error(`Unknown HTTP status code "${statusCode}".`);
 		}
-	} else if (new.target) {
-		Error.call(this, message);
-		this.statusCode = statusCode;
 	} else {
-		let result = Object.create(HttpError.prototype);
-		Error.call(result, message);
-		result.statusCode = statusCode;
-		return result;
+		let error = new Error(message);
+		error.name = this.constructor.name;
+		error.statusCode = statusCode;
+
+		setPrototypeOf(error, new.target ? getPrototypeOf(this) : HttpError.prototype);
+
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace?.(error, HttpError);
+		}
+		return error;
 	}
 }
 
-HttpError.prototype = Object.create(Error.prototype);
-HttpError.prototype.constructor = HttpError;
+HttpError.prototype = Object.create(Error.prototype, {
+	constructor: {
+		value: Error,
+		enumerable: false,
+		writable: true,
+		configurable: true,
+	},
+});
+
+setPrototypeOf(HttpError, Error);
 
 export class BadRequestError extends HttpError {
 	constructor(message) {
