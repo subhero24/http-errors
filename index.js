@@ -22,7 +22,7 @@ export default function HttpError(statusCode, message) {
 		setPrototypeOf(error, new.target ? getPrototypeOf(this) : HttpError.prototype);
 
 		if (Error.captureStackTrace) {
-			Error.captureStackTrace?.(error, HttpError);
+			Error.captureStackTrace(error, HttpError);
 		}
 		return error;
 	}
