@@ -6,16 +6,16 @@ let setPrototypeOf = Object.setPrototypeOf
 			return o;
 	  };
 
-export default function HttpError(statusCode, message) {
+export default function HttpError(statusCode, ...args) {
 	if (new.target === HttpError) {
 		let constructor = errorsByStatusCode[statusCode];
 		if (constructor) {
-			return new constructor(message);
+			return new constructor(...args);
 		} else {
 			throw new Error(`Unknown HTTP status code "${statusCode}".`);
 		}
 	} else {
-		let error = new Error(message);
+		let error = new Error(...args);
 		error.name = this.constructor.name;
 		error.statusCode = statusCode;
 
@@ -40,224 +40,224 @@ HttpError.prototype = Object.create(Error.prototype, {
 setPrototypeOf(HttpError, Error);
 
 export class BadRequestError extends HttpError {
-	constructor(message) {
-		super(400, message);
+	constructor(...args) {
+		super(400, ...args);
 	}
 }
 
 export class UnauthorizedError extends HttpError {
-	constructor(message) {
-		super(401, message);
+	constructor(...args) {
+		super(401, ...args);
 	}
 }
 
 export class PaymentRequiredError extends HttpError {
-	constructor(message) {
-		super(402, message);
+	constructor(...args) {
+		super(402, ...args);
 	}
 }
 
 export class ForbiddenError extends HttpError {
-	constructor(message) {
-		super(403, message);
+	constructor(...args) {
+		super(403, ...args);
 	}
 }
 
 export class NotFoundError extends HttpError {
-	constructor(message) {
-		super(404, message);
+	constructor(...args) {
+		super(404, ...args);
 	}
 }
 
 export class MethodNotAllowedError extends HttpError {
-	constructor(message) {
-		super(405, message);
+	constructor(...args) {
+		super(405, ...args);
 	}
 }
 
 export class NotAcceptableError extends HttpError {
-	constructor(message) {
-		super(406, message);
+	constructor(...args) {
+		super(406, ...args);
 	}
 }
 
 export class ProxyAuthenticationRequiredError extends HttpError {
-	constructor(message) {
-		super(407, message);
+	constructor(...args) {
+		super(407, ...args);
 	}
 }
 
 export class RequestTimeoutError extends HttpError {
-	constructor(message) {
-		super(408, message);
+	constructor(...args) {
+		super(408, ...args);
 	}
 }
 
 export class ConflictError extends HttpError {
-	constructor(message) {
-		super(409, message);
+	constructor(...args) {
+		super(409, ...args);
 	}
 }
 
 export class GoneError extends HttpError {
-	constructor(message) {
-		super(410, message);
+	constructor(...args) {
+		super(410, ...args);
 	}
 }
 
 export class LengthRequiredError extends HttpError {
-	constructor(message) {
-		super(411, message);
+	constructor(...args) {
+		super(411, ...args);
 	}
 }
 
 export class PreconditionFailedError extends HttpError {
-	constructor(message) {
-		super(412, message);
+	constructor(...args) {
+		super(412, ...args);
 	}
 }
 
 export class PayloadTooLargeError extends HttpError {
-	constructor(message) {
-		super(413, message);
+	constructor(...args) {
+		super(413, ...args);
 	}
 }
 
 export class URITooLongError extends HttpError {
-	constructor(message) {
-		super(414, message);
+	constructor(...args) {
+		super(414, ...args);
 	}
 }
 
 export class UnsupportedMediaTypeError extends HttpError {
-	constructor(message) {
-		super(415, message);
+	constructor(...args) {
+		super(415, ...args);
 	}
 }
 
 export class RangeNotSatisfiableError extends HttpError {
-	constructor(message) {
-		super(416, message);
+	constructor(...args) {
+		super(416, ...args);
 	}
 }
 
 export class ExpectationFailedError extends HttpError {
-	constructor(message) {
-		super(417, message);
+	constructor(...args) {
+		super(417, ...args);
 	}
 }
 
 export class ImATeapotError extends HttpError {
-	constructor(message) {
-		super(418, message);
+	constructor(...args) {
+		super(418, ...args);
 	}
 }
 
 export class UnprocessableEntityError extends HttpError {
-	constructor(message) {
-		super(422, message);
+	constructor(...args) {
+		super(422, ...args);
 	}
 }
 
 export class TooEarlyError extends HttpError {
-	constructor(message) {
-		super(425, message);
+	constructor(...args) {
+		super(425, ...args);
 	}
 }
 
 export class UpgradeRequiredError extends HttpError {
-	constructor(message) {
-		super(426, message);
+	constructor(...args) {
+		super(426, ...args);
 	}
 }
 
 export class PreconditionRequiredError extends HttpError {
-	constructor(message) {
-		super(428, message);
+	constructor(...args) {
+		super(428, ...args);
 	}
 }
 
 export class TooManyRequestsError extends HttpError {
-	constructor(message) {
-		super(429, message);
+	constructor(...args) {
+		super(429, ...args);
 	}
 }
 
 export class RequestHeaderFieldsTooLargeError extends HttpError {
-	constructor(message) {
-		super(431, message);
+	constructor(...args) {
+		super(431, ...args);
 	}
 }
 
 export class UnavailableForLegalReasonsError extends HttpError {
-	constructor(message) {
-		super(451, message);
+	constructor(...args) {
+		super(451, ...args);
 	}
 }
 
 export class InternalServerError extends HttpError {
-	constructor(message) {
-		super(500, message);
+	constructor(...args) {
+		super(500, ...args);
 	}
 }
 
 export class NotImplementedError extends HttpError {
-	constructor(message) {
-		super(501, message);
+	constructor(...args) {
+		super(501, ...args);
 	}
 }
 
 export class BadGatewayError extends HttpError {
-	constructor(message) {
-		super(502, message);
+	constructor(...args) {
+		super(502, ...args);
 	}
 }
 
 export class ServiceUnavailableError extends HttpError {
-	constructor(message) {
-		super(503, message);
+	constructor(...args) {
+		super(503, ...args);
 	}
 }
 
 export class GatewayTimeoutError extends HttpError {
-	constructor(message) {
-		super(504, message);
+	constructor(...args) {
+		super(504, ...args);
 	}
 }
 
 export class HTTPVersionNotSupportedError extends HttpError {
-	constructor(message) {
-		super(505, message);
+	constructor(...args) {
+		super(505, ...args);
 	}
 }
 
 export class VariantAlsoNegotiatesError extends HttpError {
-	constructor(message) {
-		super(506, message);
+	constructor(...args) {
+		super(506, ...args);
 	}
 }
 
 export class InsufficientStorageError extends HttpError {
-	constructor(message) {
-		super(507, message);
+	constructor(...args) {
+		super(507, ...args);
 	}
 }
 
 export class LoopDetectedError extends HttpError {
-	constructor(message) {
-		super(508, message);
+	constructor(...args) {
+		super(508, ...args);
 	}
 }
 
 export class NotExtendedError extends HttpError {
-	constructor(message) {
-		super(510, message);
+	constructor(...args) {
+		super(510, ...args);
 	}
 }
 
 export class NetworkAuthenticationRequiredError extends HttpError {
-	constructor(message) {
-		super(511, message);
+	constructor(...args) {
+		super(511, ...args);
 	}
 }
 
