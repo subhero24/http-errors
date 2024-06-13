@@ -6,19 +6,19 @@ let setPrototypeOf = Object.setPrototypeOf
 			return o;
 	  };
 
-export default function HttpError(statusCode, ...args) {
+export default function HttpError(status, ...args) {
 	if (new.target === HttpError) {
-		let constructor = errorsByStatusCode[statusCode];
+		let constructor = errorsByStatus[status];
 		if (constructor) {
 			return new constructor(...args);
 		} else {
-			throw new Error(`Unknown HTTP status code "${statusCode}".`);
+			throw new Error(`Unknown HTTP status code "${status}".`);
 		}
 	} else {
 		let error = new Error(...args);
 
 		error.type = this.constructor.name;
-		error.statusCode = statusCode;
+		error.status = status;
 
 		Object.defineProperty(error, 'message', { enumerable: true });
 
@@ -264,7 +264,7 @@ export class NetworkAuthenticationRequiredError extends HttpError {
 	}
 }
 
-let errorsByStatusCode = {
+let errorsByStatus = {
 	400: BadRequestError,
 	401: UnauthorizedError,
 	402: PaymentRequiredError,
