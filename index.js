@@ -16,8 +16,11 @@ export default function HttpError(statusCode, ...args) {
 		}
 	} else {
 		let error = new Error(...args);
-		error.name = this.constructor.name;
+
+		error.type = this.constructor.name;
 		error.statusCode = statusCode;
+
+		Object.defineProperty(error, 'message', { enumerable: true });
 
 		setPrototypeOf(error, new.target ? getPrototypeOf(this) : HttpError.prototype);
 
