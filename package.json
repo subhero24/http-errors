@@ -1,6 +1,6 @@
 {
 	"name": "http-errors",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "HTTP errors with status codes",
 	"type": "module",
 	"main": "index.js",
